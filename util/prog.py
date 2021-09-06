@@ -225,9 +225,7 @@ class ComProg(threading.Thread):
 if __name__ == '__main__':
     com = "/dev/ttyUSB0"
     baud = 115200
-    # data = [1, 2, 3, 4, 5, 6, 7, 8, 0]
-    # file_name = 'fw2.bin'
-    file_name = 'demo_app.bin'
+    file_name = 'demo_app_1_led.bin'
     with open(file_name, mode='rb') as file:
         data = file.read()
         # print(data)

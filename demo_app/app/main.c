@@ -49,19 +49,8 @@ int main(void)
 
         if (flag_1000ms)
         {
-
-            if (!GET_PIN(BUT_L))
-            {
-                // TestFlash(0);
-                MDR_UART1->DR = 'l';
-            }
-            if (!GET_PIN(BUT_R))
-            {
-                // TestFlash(1);
-                MDR_UART1->DR = 'r';
-            }
-
             flag_1000ms = 0;
+            TGL_LED(7);
             TGL_LED(6);
         }
     }
