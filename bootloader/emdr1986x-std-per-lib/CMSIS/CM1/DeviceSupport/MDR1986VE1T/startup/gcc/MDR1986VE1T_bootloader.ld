@@ -166,6 +166,14 @@ SECTIONS
 		KEEP(*(.boot_shared))
 	} > IRAM
 
+	.flash_fill :  AT (LOADADDR(.data_boot_shared) + SIZEOF(.data_boot_shared))
+	{
+		FILL(0x00);
+		 . = ORIGIN(FLASH) + LENGTH(FLASH) - 1 - SIZEOF(.data) - SIZEOF(.ramfunc) - SIZEOF(.data_boot_shared);
+		/* Note that this byte is technically needed, as the linker needs to have something in the output section */
+		BYTE(0xaa);
+	} > FLASH
+
 	.bss :
 	{
 		. = ALIGN(4);
