@@ -210,7 +210,6 @@ void UART1_IRQHandler(void)
         UartProg_InterruptRxByte();
         UART_ClearITPendingBit(MDR_UART1, UART_IT_RX);
     }
-
 }
 
 /*******************************************************************************
@@ -288,17 +287,6 @@ void WWDG_IRQHandler(void)
 *******************************************************************************/
 void Timer4_IRQHandler(void)
 {
-    // soft PWM f ~ 100kHz (82.5kHz)
-    if (TIMER_GetITStatus(MDR_TIMER4, TIMER_STATUS_CNT_ARR))
-    {
-        TIMER_ClearFlag(MDR_TIMER4, TIMER_STATUS_CNT_ARR);
-
-        TIMER_Cmd(MDR_TIMER4, DISABLE);
-        TIMER_SetCounter(MDR_TIMER4, 0);
-        TIMER_Cmd(MDR_TIMER4, ENABLE);
-
-        // SoftPWM();
-    }
 }
 
 /*******************************************************************************

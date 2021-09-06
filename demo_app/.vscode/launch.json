@@ -8,7 +8,7 @@
             "showDevDebugOutput": true,
             "name": "openocd",
             "cwd": "${workspaceRoot}",
-            "executable": "./build/bin/demo_can.elf",
+            "executable": "./build/bin/demo_app.elf",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",

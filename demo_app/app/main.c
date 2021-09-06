@@ -2,8 +2,7 @@
 #include "inits.h"
 #include "gpio_def.h"
 #include "uart_prog.h"
-#include <string.h>
-#include "MDR32F9Qx_eeprom.h"
+#include <stdbool.h>
 
 volatile bool __attribute__((section(".boot_shared"))) is_main_app;
 
@@ -43,7 +42,6 @@ int main(void)
         if (flag_100ms)
         {
             flag_100ms = 0;
-            // TGL_LED(6);
             ReadButtons();
         }
 
@@ -54,11 +52,6 @@ int main(void)
             TGL_LED(6);
         }
     }
-}
-
-uint32_t GetSysTime_ms(void)
-{
-    return system_time_ms;
 }
 
 void SysTick_1ms(void)

@@ -1,6 +1,8 @@
 #ifndef __GPIO_DEF_H__
 #define __GPIO_DEF_H__
 
+#include "MDR1986VE1T.h"
+
 /* inputs: */
 /* buttons: left, right, up, down, select */
 #define PIN_BIT_BUT_U 3
