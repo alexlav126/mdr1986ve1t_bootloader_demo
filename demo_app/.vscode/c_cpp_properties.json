@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "vscode_c_cpp_properties",
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "includePath": [
+                "${workspaceRoot}/emdr1986x-std-per-lib/CMSIS/CM1/CoreSupport",
+                "${workspaceRoot}/emdr1986x-std-per-lib/CMSIS/CM1/DeviceSupport/MDR1986VE1T/inc",
+                "${workspaceRoot}/emdr1986x-std-per-lib/CMSIS/CM1/DeviceSupport/MDR1986VE1T/startup",
+                "${workspaceRoot}/emdr1986x-std-per-lib/MDR32F9Qx_StdPeriph_Driver/inc",
+                "${workspaceRoot}/app"
+            ],
+            "defines": [
+                "USE_MDR1986VE1T"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}
