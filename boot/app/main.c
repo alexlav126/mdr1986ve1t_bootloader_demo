@@ -88,7 +88,7 @@ static uint32_t Crc32(const uint8_t *buf, uint32_t len)
     return crc ^ 0xffffffff;
 }
 
-static bool IsNewFirmware(void)
+static bool CheckFirmware(uint32_t addr)
 {
     uint32_t fw_len = *((const uint32_t *)FW_LEN_ADDR);
     uint32_t crc1 = *((const uint32_t *)FW_CRC_ADDR);
@@ -96,7 +96,7 @@ static bool IsNewFirmware(void)
     if ((fw_len == 0) || (fw_len > FW_MAX_LEN))
         return false;
 
-    const uint8_t *p = (const uint8_t *)FIRST_FLASH_ADDR;
+    const uint8_t *p = (const uint8_t *)addr;
     uint32_t crc2 = Crc32(p, fw_len);
     if (crc1 != crc2)
         return false;
@@ -136,6 +136,11 @@ static inline void Prog(void)
     }
 }
 
+static inline void RemoveNewFirmwareSign(void)
+{
+    EEPROM_ErasePage((FLASH_NUM_PAGES - 1) * EEPROM_PAGE_SIZE, EEPROM_Main_Bank_Select);
+}
+
 static void JumpToApp(uint32_t addr)
 {
     uint32_t jump_addr = *((volatile uint32_t *)(addr + 4));
@@ -153,10 +158,31 @@ int main(void)
     is_main_app = false;
     HW_Init();
 
-    if (IsNewFirmware())
+    bool is_ok = true;
+
+    if (CheckFirmware(FIRST_FLASH_ADDR))
     {
-        Erase();
-        Prog();
+        uint8_t try_counter = 3;
+        while (try_counter)
+        {
+            Erase();
+            Prog();
+            is_ok = CheckFirmware(MAIN_APP_FLASH_ADDR);
+            if (is_ok) {
+                RemoveNewFirmwareSign();
+                break;
+            }
+            try_counter--;
+        }
     }
-    JumpToApp(MAIN_APP_FLASH_ADDR);
+
+    if (is_ok)
+    {
+        JumpToApp(MAIN_APP_FLASH_ADDR);
+    }
+    else
+    {
+        while (1)
+            ;
+    }
 }
